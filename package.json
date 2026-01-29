@@ -1,21 +1,6 @@
 {
-  "name": "@rokmohar/medusa-plugin-meilisearch",
-  "version": "1.3.6",
-  "description": "Meilisearch plugin for Medusa 2",
-  "author": "Rok Mohar",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rokmohar/medusa-plugin-meilisearch.git"
-  },
-  "keywords": [
-    "medusa",
-    "medusa-v2",
-    "medusa-plugin",
-    "medusa-plugin-integration",
-    "medusa-plugin-meilisearch",
-    "medusa-plugin-search"
-  ],
+  "name": "@1checkout/medusa-plugin-meilisearch",
+  "version": "1.0.0",
   "files": [
     ".medusa/server"
   ],
@@ -33,6 +18,7 @@
   },
   "scripts": {
     "build": "medusa plugin:build",
+    "prepare": "medusa plugin:build",
     "dev": "medusa plugin:develop",
     "prepublishOnly": "medusa plugin:build",
     "lint": "eslint --ext .js,.ts src --cache --cache-strategy content",
