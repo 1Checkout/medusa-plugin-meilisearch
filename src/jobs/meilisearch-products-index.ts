@@ -8,6 +8,9 @@ import { syncProductsWorkflow } from '../workflows/sync-products'
  * This is required because jobs are wrapped as workflows by Medusa's Redis workflow engine,
  * and calling workflows directly with container.run() causes ContainerLike compatibility issues.
  */
+
+const triggerOnStart = 0
+
 const productsIndexJobWorkflow = createWorkflow('products-index-job-workflow', () => {
   const result = syncProductsWorkflow.runAsStep({
     input: {},
@@ -29,5 +32,5 @@ export default async function meilisearchProductsIndexJob(container: MedusaConta
 export const config: CronJobConfig = {
   name: 'meilisearch-products-index',
   schedule: '* * * * *',
-  numberOfExecutions: 1,
+  numberOfExecutions: triggerOnStart,
 }
