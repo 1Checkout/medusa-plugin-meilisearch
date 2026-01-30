@@ -1,0 +1,1 @@
+{"version":3,"file":"meilisearch-tag-upsert.d.ts","sourceRoot":"","sources":["../../../../src/subscribers/meilisearch-tag-upsert.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,gBAAgB,EAAE,MAAM,qBAAqB,CAAA;AAItE,wBAA8B,2BAA2B,CAAC,EACxD,SAAS,EACT,KAAK,EAAE,EAAE,IAAI,EAAE,GAChB,EAAE,cAAc,CAAC;IAAE,EAAE,EAAE,MAAM,CAAA;CAAE,CAAC,iBAWhC;AAED,eAAO,MAAM,MAAM,EAAE,gBAapB,CAAA"}

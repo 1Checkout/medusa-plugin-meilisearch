@@ -1,0 +1,1 @@
+{"version":3,"file":"sync-products.d.ts","sourceRoot":"","sources":["../../../../../src/workflows/steps/sync-products.ts"],"names":[],"mappings":"AAEA,OAAO,EAAc,kBAAkB,EAAE,MAAM,iBAAiB,CAAA;AAGhE,MAAM,MAAM,SAAS,GAAG;IACtB,OAAO,CAAC,EAAE,kBAAkB,CAAC,SAAS,CAAC,CAAA;IACvC,SAAS,CAAC,EAAE,MAAM,CAAA;CACnB,CAAA;AAED,eAAO,MAAM,gBAAgB;;;EA4F5B,CAAA"}

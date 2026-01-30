@@ -1,0 +1,1 @@
+{"version":3,"file":"route.d.ts","sourceRoot":"","sources":["../../../../../../../src/api/admin/meilisearch/sync/route.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,cAAc,EAAE,MAAM,qBAAqB,CAAA;AAGnE,MAAM,WAAW,iBAAiB;IAChC,OAAO,EAAE,MAAM,CAAA;CAChB;AAED,wBAAsB,IAAI,CAAC,GAAG,EAAE,aAAa,EAAE,GAAG,EAAE,cAAc,CAAC,iBAAiB,CAAC,iBASpF"}

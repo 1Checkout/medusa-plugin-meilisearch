@@ -1,0 +1,1 @@
+{"version":3,"file":"sync-categories.d.ts","sourceRoot":"","sources":["../../../../../src/workflows/steps/sync-categories.ts"],"names":[],"mappings":"AACA,OAAO,EAAsB,kBAAkB,EAAE,MAAM,iBAAiB,CAAA;AAIxE,MAAM,MAAM,SAAS,GAAG;IACtB,OAAO,CAAC,EAAE,kBAAkB,CAAC,kBAAkB,CAAC,CAAA;IAChD,SAAS,CAAC,EAAE,MAAM,CAAA;CACnB,CAAA;AAED,eAAO,MAAM,kBAAkB;;;EA4F9B,CAAA"}
