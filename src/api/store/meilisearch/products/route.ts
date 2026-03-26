@@ -43,7 +43,7 @@ export async function GET(req: MedusaRequest<any, StoreProductsParams>, res: Med
   const meilisearchService: MeiliSearchService = req.scope.resolve(MEILISEARCH_MODULE)
 
   // Use prepareListQuery to handle field selectors and other standard parameters
-  const queryConfig = prepareListQuery(standardQuery, {
+  const queryConfig = await prepareListQuery(standardQuery, {
     defaults: ['id', 'title', 'handle', 'status'],
     isList: true,
   })
@@ -117,8 +117,8 @@ export async function GET(req: MedusaRequest<any, StoreProductsParams>, res: Med
 
   // Fetch products using the standard Medusa query service with prepareListQuery config
   const { data: products, metadata } = await queryService.graph({
-    entity: 'product',
     ...queryConfig.remoteQueryConfig,
+    entity: 'product',
     filters,
     context,
   })
