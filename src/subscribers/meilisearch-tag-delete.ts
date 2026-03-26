@@ -1,11 +1,14 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ProductEvents } from '@medusajs/utils'
 import { deleteTagWorkflow } from '../workflows/delete-tag'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
 
 export default async function meilisearchTagDeleteHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
+  if (!isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE)) return
+
   const logger = container.resolve('logger')
 
   try {

@@ -1,11 +1,14 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ProductEvents } from '@medusajs/utils'
 import { upsertImageWorkflow } from '../workflows/upsert-image'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
 
 export default async function meilisearchImageUpsertHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
+  if (!isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE)) return
+
   const logger = container.resolve('logger')
 
   try {

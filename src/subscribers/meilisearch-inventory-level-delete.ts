@@ -1,11 +1,14 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { InventoryEvents } from '@medusajs/utils'
 import { deleteInventoryLevelWorkflow } from '../workflows/delete-inventory-level'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
 
 export default async function meilisearchInventoryLevelDeleteHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
+  if (!isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE)) return
+
   const logger = container.resolve('logger')
 
   try {
