@@ -13,6 +13,7 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   protected readonly config_: MeilisearchPluginOptions
   protected readonly client_: MeiliSearch
   protected readonly embedder_: MeiliSearchEmbedder
+  protected paused_: boolean = false
 
   constructor(container: any, options: MeilisearchPluginOptions) {
     super(container, options)
@@ -43,6 +44,34 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
     }
 
     return `${baseKey}_${language}`
+  }
+
+  isSubscriptionEnabledForType(type: string): boolean {
+    if (this.paused_) {
+      return false
+    }
+
+    const settings = this.config_.settings || {}
+    for (const config of Object.values(settings)) {
+      if (config.type === type && config.enabled !== false) {
+        if (config.subscribeToEvents === false) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  pauseIndexing(): void {
+    this.paused_ = true
+  }
+
+  resumeIndexing(): void {
+    this.paused_ = false
+  }
+
+  isIndexingPaused(): boolean {
+    return this.paused_
   }
 
   async getFieldsForType(type: string) {

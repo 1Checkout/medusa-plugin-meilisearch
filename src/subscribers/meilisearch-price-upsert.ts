@@ -1,11 +1,14 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { PricingEvents } from '@medusajs/utils'
 import { upsertPriceWorkflow } from '../workflows/upsert-price'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
 
 export default async function meilisearchPriceUpsertHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
+  if (!isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE)) return
+
   const logger = container.resolve('logger')
 
   try {
