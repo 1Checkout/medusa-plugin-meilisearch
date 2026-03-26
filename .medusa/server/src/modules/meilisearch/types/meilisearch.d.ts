@@ -113,6 +113,13 @@ export interface MeilisearchPluginOptions {
             fields?: string[];
             indexSettings: Settings;
             transformer?: Transformer;
+            /**
+             * Whether to subscribe to entity events (create/update/delete) for real-time indexing.
+             * Set to `false` to disable per-event indexing (useful during bulk imports).
+             * Use the sync workflow or cron job to batch-index after import.
+             * Defaults to `true`.
+             */
+            subscribeToEvents?: boolean;
         };
     };
     /**
