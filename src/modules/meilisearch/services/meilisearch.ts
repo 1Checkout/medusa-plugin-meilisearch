@@ -5,6 +5,8 @@ import { meilisearchErrorCodes, MeilisearchPluginOptions } from '../types'
 import { MeiliSearchEmbedder } from '../utils/embedder'
 import { transformProduct, transformCategory, TransformOptions } from '../utils/transformer'
 
+let _indexingPaused = false
+
 export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   public static identifier = 'index-meilisearch'
 
@@ -13,7 +15,6 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   protected readonly config_: MeilisearchPluginOptions
   protected readonly client_: MeiliSearch
   protected readonly embedder_: MeiliSearchEmbedder
-  protected paused_: boolean = false
 
   constructor(container: any, options: MeilisearchPluginOptions) {
     super(container, options)
@@ -47,7 +48,7 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   isSubscriptionEnabledForType(type: string): boolean {
-    if (this.paused_) {
+    if (_indexingPaused) {
       return false
     }
 
@@ -63,15 +64,15 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   pauseIndexing(): void {
-    this.paused_ = true
+    _indexingPaused = true
   }
 
   resumeIndexing(): void {
-    this.paused_ = false
+    _indexingPaused = false
   }
 
   isIndexingPaused(): boolean {
-    return this.paused_
+    return _indexingPaused
   }
 
   async getFieldsForType(type: string) {
