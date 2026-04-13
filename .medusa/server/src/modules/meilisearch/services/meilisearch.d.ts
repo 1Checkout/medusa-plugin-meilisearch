@@ -9,7 +9,6 @@ export declare class MeiliSearchService extends SearchUtils.AbstractSearchServic
     protected readonly config_: MeilisearchPluginOptions;
     protected readonly client_: MeiliSearch;
     protected readonly embedder_: MeiliSearchEmbedder;
-    protected paused_: boolean;
     constructor(container: any, options: MeilisearchPluginOptions);
     protected getLanguageIndexKey(baseKey: string, language?: string): string;
     isSubscriptionEnabledForType(type: string): boolean;
