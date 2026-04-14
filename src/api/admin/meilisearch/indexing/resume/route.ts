@@ -1,5 +1,8 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework'
-import { MEILISEARCH_MODULE, MeiliSearchService } from '../../../../../modules/meilisearch'
+import { Modules } from '@medusajs/utils'
+import { setCacheRef } from '../../../../../modules/meilisearch/services/meilisearch'
+
+const PAUSE_CACHE_KEY = 'meilisearch:indexing:paused'
 
 export interface AdminIndexingResumeResponse {
   paused: boolean
@@ -7,8 +10,9 @@ export interface AdminIndexingResumeResponse {
 }
 
 export async function POST(req: MedusaRequest, res: MedusaResponse<AdminIndexingResumeResponse>) {
-  const meilisearchService: MeiliSearchService = req.scope.resolve(MEILISEARCH_MODULE)
-  meilisearchService.resumeIndexing()
+  const cache = req.scope.resolve(Modules.CACHE)
+  setCacheRef(cache)
+  await cache.invalidate(PAUSE_CACHE_KEY)
   res.json({
     paused: false,
     message: 'Real-time indexing has been resumed. Events will be processed normally.',

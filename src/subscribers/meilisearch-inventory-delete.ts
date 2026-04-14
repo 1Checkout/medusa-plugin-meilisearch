@@ -7,7 +7,7 @@ export default async function meilisearchInventoryDeleteHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
-  if (!isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE)) return
+  if (!(await isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE))) return
 
   const logger = container.resolve('logger')
 

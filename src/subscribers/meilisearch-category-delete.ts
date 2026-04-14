@@ -7,7 +7,7 @@ export default async function meilisearchCategoryDeleteHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
-  if (!isSubscriptionEnabled(container, CATEGORY_INDEX_TYPE)) return
+  if (!(await isSubscriptionEnabled(container, CATEGORY_INDEX_TYPE))) return
 
   const logger = container.resolve('logger')
 
