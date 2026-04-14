@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ProductEvents } from '@medusajs/utils'
 import { deleteOptionValueWorkflow } from '../workflows/delete-option-value'
-import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from '../utils/subscriber-utils'
 
 export default async function meilisearchOptionValueDeleteHandler({
   container,

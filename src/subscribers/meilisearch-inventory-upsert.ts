@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { InventoryEvents } from '@medusajs/utils'
 import { upsertInventoryWorkflow } from '../workflows/upsert-inventory'
-import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from '../utils/subscriber-utils'
 
 export default async function meilisearchInventoryUpsertHandler({
   container,

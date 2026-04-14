@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { PricingEvents } from '@medusajs/utils'
 import { upsertPriceWorkflow } from '../workflows/upsert-price'
-import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from './utils'
+import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from '../utils/subscriber-utils'
 
 export default async function meilisearchPriceUpsertHandler({
   container,

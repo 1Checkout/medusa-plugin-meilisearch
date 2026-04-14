@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ProductEvents } from '@medusajs/utils'
 import { deleteCategoryWorkflow } from '../workflows/delete-category'
-import { isSubscriptionEnabled, CATEGORY_INDEX_TYPE } from './utils'
+import { isSubscriptionEnabled, CATEGORY_INDEX_TYPE } from '../utils/subscriber-utils'
 
 export default async function meilisearchCategoryDeleteHandler({
   container,
