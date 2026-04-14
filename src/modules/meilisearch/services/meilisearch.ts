@@ -6,6 +6,7 @@ import { MeiliSearchEmbedder } from '../utils/embedder'
 import { transformProduct, transformCategory, TransformOptions } from '../utils/transformer'
 
 let _indexingPaused = false
+let _syncMode = false
 
 export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   public static identifier = 'index-meilisearch'
@@ -75,6 +76,14 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
     return _indexingPaused
   }
 
+  enterSyncMode(): void {
+    _syncMode = true
+  }
+
+  exitSyncMode(): void {
+    _syncMode = false
+  }
+
   async getFieldsForType(type: string) {
     const fields = new Set<string>()
 
@@ -116,6 +125,8 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   async addDocuments(indexKey: string, documents: any[], language?: string) {
+    if (_indexingPaused && !_syncMode) return
+
     const { i18n } = this.config_
     const i18nOptions = {
       i18n,
@@ -137,11 +148,15 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   async deleteDocument(indexKey: string, documentId: string | number, language?: string) {
+    if (_indexingPaused && !_syncMode) return
+
     const actualIndexKey = this.getLanguageIndexKey(indexKey, language)
     return this.client_.index(actualIndexKey).deleteDocument(documentId)
   }
 
   async deleteDocuments(indexKey: string, documents: DocumentsDeletionQuery | DocumentsIds, language?: string) {
+    if (_indexingPaused && !_syncMode) return
+
     const actualIndexKey = this.getLanguageIndexKey(indexKey, language)
     return this.client_.index(actualIndexKey).deleteDocuments(documents)
   }
