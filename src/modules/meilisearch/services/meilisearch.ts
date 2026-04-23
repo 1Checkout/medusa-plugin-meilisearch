@@ -9,15 +9,33 @@ const PAUSE_CACHE_KEY = 'meilisearch:indexing:paused'
 const PAUSE_CACHE_TTL = 86400 // 24 hours
 let _syncMode = false
 let _cacheRef: any = null
+let _containerRef: any = null
 
 export function setCacheRef(cache: any): void {
   _cacheRef = cache
 }
 
-async function isPausedViaCache(): Promise<boolean> {
-  if (!_cacheRef) return false
+function resolveCache(): any {
+  if (_cacheRef) return _cacheRef
+  if (!_containerRef) return null
   try {
-    const value = await _cacheRef.get(PAUSE_CACHE_KEY)
+    // Medusa DI container: try common keys
+    const cache = _containerRef.resolve?.('cache') || _containerRef.resolve?.('cacheService')
+    if (cache) {
+      _cacheRef = cache
+      return cache
+    }
+  } catch {
+    // ignore
+  }
+  return null
+}
+
+async function isPausedViaCache(): Promise<boolean> {
+  const cache = resolveCache()
+  if (!cache) return false
+  try {
+    const value = await cache.get(PAUSE_CACHE_KEY)
     return value === true
   } catch {
     return false
@@ -35,6 +53,12 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
 
   constructor(container: any, options: MeilisearchPluginOptions) {
     super(container, options)
+
+    // Capture the container so we can lazily resolve the cache module in
+    // guard checks — this ensures the pause flag is honored even on call
+    // paths that don't go through a subscriber/API route first (e.g. core
+    // workflow steps running in the worker process).
+    _containerRef = container
 
     this.config_ = options
 
