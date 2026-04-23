@@ -5,41 +5,12 @@ import { meilisearchErrorCodes, MeilisearchPluginOptions } from '../types'
 import { MeiliSearchEmbedder } from '../utils/embedder'
 import { transformProduct, transformCategory, TransformOptions } from '../utils/transformer'
 
-const PAUSE_CACHE_KEY = 'meilisearch:indexing:paused'
-const PAUSE_CACHE_TTL = 86400 // 24 hours
-let _syncMode = false
-let _cacheRef: any = null
-let _containerRef: any = null
-
-export function setCacheRef(cache: any): void {
-  _cacheRef = cache
-}
-
-function resolveCache(): any {
-  if (_cacheRef) return _cacheRef
-  if (!_containerRef) return null
-  try {
-    // Medusa DI container: try common keys
-    const cache = _containerRef.resolve?.('cache') || _containerRef.resolve?.('cacheService')
-    if (cache) {
-      _cacheRef = cache
-      return cache
-    }
-  } catch {
-    // ignore
-  }
-  return null
-}
-
-async function isPausedViaCache(): Promise<boolean> {
-  const cache = resolveCache()
-  if (!cache) return false
-  try {
-    const value = await cache.get(PAUSE_CACHE_KEY)
-    return value === true
-  } catch {
-    return false
-  }
+// Kill switch for real-time indexing. Set MEILISEARCH_INDEXING_PAUSED=true
+// before running large bulk product imports to avoid queuing millions of
+// per-product indexing tasks. Unset and restart to resume indexing, then
+// trigger a full reindex via the sync workflow.
+function isIndexingPaused(): boolean {
+  return process.env.MEILISEARCH_INDEXING_PAUSED === 'true'
 }
 
 export class MeiliSearchService extends SearchUtils.AbstractSearchService {
@@ -53,12 +24,6 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
 
   constructor(container: any, options: MeilisearchPluginOptions) {
     super(container, options)
-
-    // Capture the container so we can lazily resolve the cache module in
-    // guard checks — this ensures the pause flag is honored even on call
-    // paths that don't go through a subscriber/API route first (e.g. core
-    // workflow steps running in the worker process).
-    _containerRef = container
 
     this.config_ = options
 
@@ -86,26 +51,6 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
     }
 
     return `${baseKey}_${language}`
-  }
-
-  isSubscriptionEnabledForType(type: string): boolean {
-    const settings = this.config_.settings || {}
-    for (const config of Object.values(settings)) {
-      if (config.type === type && config.enabled !== false) {
-        if (config.subscribeToEvents === false) {
-          return false
-        }
-      }
-    }
-    return true
-  }
-
-  enterSyncMode(): void {
-    _syncMode = true
-  }
-
-  exitSyncMode(): void {
-    _syncMode = false
   }
 
   async getFieldsForType(type: string) {
@@ -149,8 +94,7 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   async addDocuments(indexKey: string, documents: any[], language?: string) {
-    if (!_syncMode && await isPausedViaCache()) return
-
+    if (isIndexingPaused()) return
     const { i18n } = this.config_
     const i18nOptions = {
       i18n,
@@ -172,15 +116,13 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   async deleteDocument(indexKey: string, documentId: string | number, language?: string) {
-    if (!_syncMode && await isPausedViaCache()) return
-
+    if (isIndexingPaused()) return
     const actualIndexKey = this.getLanguageIndexKey(indexKey, language)
     return this.client_.index(actualIndexKey).deleteDocument(documentId)
   }
 
   async deleteDocuments(indexKey: string, documents: DocumentsDeletionQuery | DocumentsIds, language?: string) {
-    if (!_syncMode && await isPausedViaCache()) return
-
+    if (isIndexingPaused()) return
     const actualIndexKey = this.getLanguageIndexKey(indexKey, language)
     return this.client_.index(actualIndexKey).deleteDocuments(documents)
   }

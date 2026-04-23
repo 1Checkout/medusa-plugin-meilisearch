@@ -1,14 +1,11 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ProductEvents } from '@medusajs/utils'
 import { upsertCollectionWorkflow } from '../workflows/upsert-collection'
-import { isSubscriptionEnabled, PRODUCT_INDEX_TYPE } from '../utils/subscriber-utils'
 
 export default async function meilisearchCollectionUpsertHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
-  if (!(await isSubscriptionEnabled(container, PRODUCT_INDEX_TYPE))) return
-
   const logger = container.resolve('logger')
 
   try {

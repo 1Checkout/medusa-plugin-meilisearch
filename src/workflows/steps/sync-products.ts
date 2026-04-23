@@ -14,9 +14,6 @@ export const syncProductsStep = createStep(
     const queryService = container.resolve(ContainerRegistrationKeys.QUERY)
     const meilisearchService: MeiliSearchService = container.resolve(MEILISEARCH_MODULE)
 
-    meilisearchService.enterSyncMode()
-
-    try {
     const productFields = await meilisearchService.getFieldsForType(SearchUtils.indexTypes.PRODUCTS)
     const productIndexes = await meilisearchService.getIndexesByType(SearchUtils.indexTypes.PRODUCTS)
 
@@ -102,8 +99,5 @@ export const syncProductsStep = createStep(
       totalProcessed: allProductIds.length,
       totalDeleted: productsToDelete.size,
     })
-    } finally {
-      meilisearchService.exitSyncMode()
-    }
   },
 )

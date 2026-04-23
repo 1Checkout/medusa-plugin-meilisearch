@@ -8,9 +8,6 @@ import { AdminCategoriesHitsResponse } from '../../../../api/admin/meilisearch/c
 import { AdminProductsHitsResponse } from '../../../../api/admin/meilisearch/products-hits/route'
 import { AdminSyncResponse } from '../../../../api/admin/meilisearch/sync/route.ts'
 import { AdminVectorStatusResponse } from '../../../../api/admin/meilisearch/vector-status/route.ts'
-import { AdminIndexingStatusResponse } from '../../../../api/admin/meilisearch/indexing/route.ts'
-import { AdminIndexingPauseResponse } from '../../../../api/admin/meilisearch/indexing/pause/route.ts'
-import { AdminIndexingResumeResponse } from '../../../../api/admin/meilisearch/indexing/resume/route.ts'
 
 const SyncPage = () => {
   const [semanticSearchEnabled, setSemanticSearchEnabled] = useState(false)
@@ -41,48 +38,6 @@ const SyncPage = () => {
     onError: (err) => {
       console.error(err)
       toast.error('Failed to sync data to Meilisearch')
-    },
-  })
-
-  // Query for indexing status
-  const {
-    data: indexingStatus,
-    isLoading: indexingStatusLoading,
-    refetch: refetchIndexingStatus,
-  } = useQuery<AdminIndexingStatusResponse>({
-    queryKey: ['meilisearch-indexing-status'],
-    queryFn: async () => sdk.client.fetch<AdminIndexingStatusResponse>('/admin/meilisearch/indexing'),
-    retry: 2,
-    staleTime: 5000,
-  })
-
-  const { mutate: pauseIndexing, isPending: pausePending } = useMutation({
-    mutationFn: () =>
-      sdk.client.fetch<AdminIndexingPauseResponse>('/admin/meilisearch/indexing/pause', {
-        method: 'POST',
-      }),
-    onSuccess: () => {
-      toast.success('Real-time indexing has been paused')
-      refetchIndexingStatus()
-    },
-    onError: (err) => {
-      console.error(err)
-      toast.error('Failed to pause indexing')
-    },
-  })
-
-  const { mutate: resumeIndexing, isPending: resumePending } = useMutation({
-    mutationFn: () =>
-      sdk.client.fetch<AdminIndexingResumeResponse>('/admin/meilisearch/indexing/resume', {
-        method: 'POST',
-      }),
-    onSuccess: () => {
-      toast.success('Real-time indexing has been resumed')
-      refetchIndexingStatus()
-    },
-    onError: (err) => {
-      console.error(err)
-      toast.error('Failed to resume indexing')
     },
   })
 
@@ -253,38 +208,6 @@ const SyncPage = () => {
               AI-powered semantic search.
             </Text>
           )}
-        </div>
-
-        {/* Real-Time Indexing Control */}
-        <div className="border border-gray-200 rounded-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <Heading level="h2">Real-Time Indexing</Heading>
-              {indexingStatusLoading ? (
-                <Badge>Loading...</Badge>
-              ) : indexingStatus?.paused ? (
-                <Badge color="red">Paused</Badge>
-              ) : (
-                <Badge color="green">Active</Badge>
-              )}
-            </div>
-          </div>
-          <Text className="text-gray-500 mb-4">
-            {indexingStatus?.paused
-              ? 'Real-time indexing is paused. Product changes will not be sent to Meilisearch until resumed. Use "Sync Now" to batch-index after a bulk import.'
-              : 'Real-time indexing is active. Product changes are automatically synced to Meilisearch.'}
-          </Text>
-          <div className="flex gap-3">
-            {indexingStatus?.paused ? (
-              <Button onClick={() => resumeIndexing()} isLoading={resumePending} variant="primary">
-                Resume Indexing
-              </Button>
-            ) : (
-              <Button onClick={() => pauseIndexing()} isLoading={pausePending} variant="secondary">
-                Pause Indexing
-              </Button>
-            )}
-          </div>
         </div>
 
         {/* Data Synchronization */}

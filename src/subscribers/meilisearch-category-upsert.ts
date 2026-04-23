@@ -1,14 +1,11 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ProductEvents } from '@medusajs/utils'
 import { upsertCategoryWorkflow } from '../workflows/upsert-category'
-import { isSubscriptionEnabled, CATEGORY_INDEX_TYPE } from '../utils/subscriber-utils'
 
 export default async function meilisearchCategoryUpsertHandler({
   container,
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
-  if (!(await isSubscriptionEnabled(container, CATEGORY_INDEX_TYPE))) return
-
   const logger = container.resolve('logger')
 
   try {
