@@ -15,10 +15,10 @@ export declare class MeiliSearchService extends SearchUtils.AbstractSearchServic
     getIndexesByType(type: string): Promise<string[]>;
     createIndex(indexKey: string, options?: Record<string, any>): Promise<import("meilisearch").EnqueuedTask>;
     getIndex(indexKey: string): import("meilisearch").Index<import("meilisearch").RecordAny>;
-    addDocuments(indexKey: string, documents: any[], language?: string): Promise<import("meilisearch").EnqueuedTask | undefined>;
-    replaceDocuments(indexKey: string, documents: any[], language?: string): Promise<import("meilisearch").EnqueuedTask | undefined>;
-    deleteDocument(indexKey: string, documentId: string | number, language?: string): Promise<import("meilisearch").EnqueuedTask | undefined>;
-    deleteDocuments(indexKey: string, documents: DocumentsDeletionQuery | DocumentsIds, language?: string): Promise<import("meilisearch").EnqueuedTask | undefined>;
+    addDocuments(indexKey: string, documents: any[], language?: string): Promise<import("meilisearch").EnqueuedTask>;
+    replaceDocuments(indexKey: string, documents: any[], language?: string): Promise<import("meilisearch").EnqueuedTask>;
+    deleteDocument(indexKey: string, documentId: string | number, language?: string): Promise<import("meilisearch").EnqueuedTask>;
+    deleteDocuments(indexKey: string, documents: DocumentsDeletionQuery | DocumentsIds, language?: string): Promise<import("meilisearch").EnqueuedTask>;
     deleteAllDocuments(indexKey: string, language?: string): Promise<import("meilisearch").EnqueuedTask>;
     search(indexKey: string, query: string, options: Record<string, any> & {
         language?: string;
