@@ -5,14 +5,6 @@ import { meilisearchErrorCodes, MeilisearchPluginOptions } from '../types'
 import { MeiliSearchEmbedder } from '../utils/embedder'
 import { transformProduct, transformCategory, TransformOptions } from '../utils/transformer'
 
-// Kill switch for real-time indexing. Set MEILISEARCH_INDEXING_PAUSED=true
-// before running large bulk product imports to avoid queuing millions of
-// per-product indexing tasks. Unset and restart to resume indexing, then
-// trigger a full reindex via the sync workflow.
-function isIndexingPaused(): boolean {
-  return process.env.MEILISEARCH_INDEXING_PAUSED === 'true'
-}
-
 export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   public static identifier = 'index-meilisearch'
 
@@ -94,7 +86,6 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   async addDocuments(indexKey: string, documents: any[], language?: string) {
-    if (isIndexingPaused()) return
     const { i18n } = this.config_
     const i18nOptions = {
       i18n,
@@ -116,13 +107,11 @@ export class MeiliSearchService extends SearchUtils.AbstractSearchService {
   }
 
   async deleteDocument(indexKey: string, documentId: string | number, language?: string) {
-    if (isIndexingPaused()) return
     const actualIndexKey = this.getLanguageIndexKey(indexKey, language)
     return this.client_.index(actualIndexKey).deleteDocument(documentId)
   }
 
   async deleteDocuments(indexKey: string, documents: DocumentsDeletionQuery | DocumentsIds, language?: string) {
-    if (isIndexingPaused()) return
     const actualIndexKey = this.getLanguageIndexKey(indexKey, language)
     return this.client_.index(actualIndexKey).deleteDocuments(documents)
   }
