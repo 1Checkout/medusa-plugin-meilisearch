@@ -41,42 +41,6 @@ const SyncPage = () => {
       ui.toast.error("Failed to sync data to Meilisearch");
     }
   });
-  const {
-    data: indexingStatus,
-    isLoading: indexingStatusLoading,
-    refetch: refetchIndexingStatus
-  } = reactQuery.useQuery({
-    queryKey: ["meilisearch-indexing-status"],
-    queryFn: async () => sdk.client.fetch("/admin/meilisearch/indexing"),
-    retry: 2,
-    staleTime: 5e3
-  });
-  const { mutate: pauseIndexing, isPending: pausePending } = reactQuery.useMutation({
-    mutationFn: () => sdk.client.fetch("/admin/meilisearch/indexing/pause", {
-      method: "POST"
-    }),
-    onSuccess: () => {
-      ui.toast.success("Real-time indexing has been paused");
-      refetchIndexingStatus();
-    },
-    onError: (err) => {
-      console.error(err);
-      ui.toast.error("Failed to pause indexing");
-    }
-  });
-  const { mutate: resumeIndexing, isPending: resumePending } = reactQuery.useMutation({
-    mutationFn: () => sdk.client.fetch("/admin/meilisearch/indexing/resume", {
-      method: "POST"
-    }),
-    onSuccess: () => {
-      ui.toast.success("Real-time indexing has been resumed");
-      refetchIndexingStatus();
-    },
-    onError: (err) => {
-      console.error(err);
-      ui.toast.error("Failed to resume indexing");
-    }
-  });
   const { mutate: searchProducts, isPending: searchProductsPending } = reactQuery.useMutation({
     mutationFn: async () => {
       if (!searchQuery.trim()) {
@@ -206,14 +170,6 @@ const SyncPage = () => {
         ] })
       ] }),
       !(vectorStatus == null ? void 0 : vectorStatus.enabled) && /* @__PURE__ */ jsxRuntime.jsx(ui.Text, { className: "text-gray-500", children: "Vector search is not configured. Add vectorSearch configuration to your plugin options to enable AI-powered semantic search." })
-    ] }),
-    /* @__PURE__ */ jsxRuntime.jsxs("div", { className: "border border-gray-200 rounded-lg p-6", children: [
-      /* @__PURE__ */ jsxRuntime.jsx("div", { className: "flex items-center justify-between mb-4", children: /* @__PURE__ */ jsxRuntime.jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsxRuntime.jsx(ui.Heading, { level: "h2", children: "Real-Time Indexing" }),
-        indexingStatusLoading ? /* @__PURE__ */ jsxRuntime.jsx(ui.Badge, { children: "Loading..." }) : (indexingStatus == null ? void 0 : indexingStatus.paused) ? /* @__PURE__ */ jsxRuntime.jsx(ui.Badge, { color: "red", children: "Paused" }) : /* @__PURE__ */ jsxRuntime.jsx(ui.Badge, { color: "green", children: "Active" })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntime.jsx(ui.Text, { className: "text-gray-500 mb-4", children: (indexingStatus == null ? void 0 : indexingStatus.paused) ? 'Real-time indexing is paused. Product changes will not be sent to Meilisearch until resumed. Use "Sync Now" to batch-index after a bulk import.' : "Real-time indexing is active. Product changes are automatically synced to Meilisearch." }),
-      /* @__PURE__ */ jsxRuntime.jsx("div", { className: "flex gap-3", children: (indexingStatus == null ? void 0 : indexingStatus.paused) ? /* @__PURE__ */ jsxRuntime.jsx(ui.Button, { onClick: () => resumeIndexing(), isLoading: resumePending, variant: "primary", children: "Resume Indexing" }) : /* @__PURE__ */ jsxRuntime.jsx(ui.Button, { onClick: () => pauseIndexing(), isLoading: pausePending, variant: "secondary", children: "Pause Indexing" }) })
     ] }),
     /* @__PURE__ */ jsxRuntime.jsxs("div", { className: "border border-gray-200 rounded-lg p-6", children: [
       /* @__PURE__ */ jsxRuntime.jsx("div", { className: "flex items-center gap-3 mb-4", children: /* @__PURE__ */ jsxRuntime.jsx(ui.Heading, { level: "h2", children: "Data Synchronization" }) }),

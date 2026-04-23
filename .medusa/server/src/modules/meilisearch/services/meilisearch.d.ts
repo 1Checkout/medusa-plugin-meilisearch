@@ -11,12 +11,6 @@ export declare class MeiliSearchService extends SearchUtils.AbstractSearchServic
     protected readonly embedder_: MeiliSearchEmbedder;
     constructor(container: any, options: MeilisearchPluginOptions);
     protected getLanguageIndexKey(baseKey: string, language?: string): string;
-    isSubscriptionEnabledForType(type: string): boolean;
-    pauseIndexing(): void;
-    resumeIndexing(): void;
-    isIndexingPaused(): boolean;
-    enterSyncMode(): void;
-    exitSyncMode(): void;
     getFieldsForType(type: string): Promise<string[]>;
     getIndexesByType(type: string): Promise<string[]>;
     createIndex(indexKey: string, options?: Record<string, any>): Promise<import("meilisearch").EnqueuedTask>;
