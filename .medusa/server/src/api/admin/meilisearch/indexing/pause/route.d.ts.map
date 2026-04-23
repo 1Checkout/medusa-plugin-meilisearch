@@ -1,1 +1,0 @@
-{"version":3,"file":"route.d.ts","sourceRoot":"","sources":["../../../../../../../../src/api/admin/meilisearch/indexing/pause/route.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,cAAc,EAAE,MAAM,qBAAqB,CAAA;AAGnE,MAAM,WAAW,0BAA0B;IACzC,MAAM,EAAE,OAAO,CAAA;IACf,OAAO,EAAE,MAAM,CAAA;CAChB;AAED,wBAAsB,IAAI,CAAC,GAAG,EAAE,aAAa,EAAE,GAAG,EAAE,cAAc,CAAC,0BAA0B,CAAC,iBAO7F"}
