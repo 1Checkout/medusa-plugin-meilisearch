@@ -4,7 +4,7 @@ exports.syncProductsStep = void 0;
 const workflows_sdk_1 = require("@medusajs/workflows-sdk");
 const utils_1 = require("@medusajs/utils");
 const meilisearch_1 = require("../../modules/meilisearch");
-exports.syncProductsStep = (0, workflows_sdk_1.createStep)('sync-products', async ({ filters, batchSize = 1000 }, { container }) => {
+exports.syncProductsStep = (0, workflows_sdk_1.createStep)('sync-products', async ({ filters, batchSize = 5000 }, { container }) => {
     const queryService = container.resolve(utils_1.ContainerRegistrationKeys.QUERY);
     const meilisearchService = container.resolve(meilisearch_1.MEILISEARCH_MODULE);
     const productFields = await meilisearchService.getFieldsForType(utils_1.SearchUtils.indexTypes.PRODUCTS);

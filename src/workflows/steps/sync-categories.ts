@@ -10,7 +10,7 @@ export type StepInput = {
 
 export const syncCategoriesStep = createStep(
   'sync-categories',
-  async ({ filters, batchSize = 1000 }: StepInput, { container }) => {
+  async ({ filters, batchSize = 5000 }: StepInput, { container }) => {
     const queryService = container.resolve(ContainerRegistrationKeys.QUERY)
     const meilisearchService: MeiliSearchService = container.resolve(MEILISEARCH_MODULE)
 
