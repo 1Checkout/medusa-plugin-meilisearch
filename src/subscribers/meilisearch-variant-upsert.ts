@@ -20,11 +20,14 @@ export default async function meilisearchVariantUpsertHandler({
 
 export const config: SubscriberConfig = {
   event: [
+    // Creation indexing disabled (see meilisearch-product-upsert): variants are
+    // created in bulk with their product, so creation indexing is handled by the
+    // post-import batched sync. Only UPDATE events index live.
     // Workflow events
-    'product-variant.created',
+    // 'product-variant.created',
     'product-variant.updated',
     // Module events
-    ProductEvents.PRODUCT_VARIANT_CREATED,
+    // ProductEvents.PRODUCT_VARIANT_CREATED,
     ProductEvents.PRODUCT_VARIANT_UPDATED,
   ],
 }

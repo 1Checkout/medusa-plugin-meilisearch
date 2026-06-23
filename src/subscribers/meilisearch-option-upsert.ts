@@ -20,11 +20,14 @@ export default async function meilisearchOptionUpsertHandler({
 
 export const config: SubscriberConfig = {
   event: [
+    // Creation indexing disabled (see meilisearch-product-upsert): options are
+    // created in bulk with their product, so creation indexing is handled by the
+    // post-import batched sync. Only UPDATE events index live.
     // Workflow events
-    'product-option.created',
+    // 'product-option.created',
     'product-option.updated',
     // Module events
-    ProductEvents.PRODUCT_OPTION_CREATED,
+    // ProductEvents.PRODUCT_OPTION_CREATED,
     ProductEvents.PRODUCT_OPTION_UPDATED,
   ],
 }

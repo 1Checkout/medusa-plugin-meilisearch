@@ -20,11 +20,14 @@ export default async function meilisearchPriceUpsertHandler({
 
 export const config: SubscriberConfig = {
   event: [
+    // Creation indexing disabled (see meilisearch-product-upsert): prices are
+    // created in bulk with their product, so creation indexing is handled by the
+    // post-import batched sync. Only UPDATE events index live (live price changes).
     // Workflow events
-    'price.created',
+    // 'price.created',
     'price.updated',
     // Module events
-    PricingEvents.PRICE_CREATED,
+    // PricingEvents.PRICE_CREATED,
     PricingEvents.PRICE_UPDATED,
   ],
 }
