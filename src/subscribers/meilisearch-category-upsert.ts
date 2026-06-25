@@ -21,10 +21,10 @@ export default async function meilisearchCategoryUpsertHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'product-category.created',
-    'product-category.updated',
+    // 'product-category.created',
+    // 'product-category.updated',
     // Module events
-    ProductEvents.PRODUCT_CATEGORY_CREATED,
-    ProductEvents.PRODUCT_CATEGORY_UPDATED,
+    // ProductEvents.PRODUCT_CATEGORY_CREATED,
+    // ProductEvents.PRODUCT_CATEGORY_UPDATED,
   ],
 }

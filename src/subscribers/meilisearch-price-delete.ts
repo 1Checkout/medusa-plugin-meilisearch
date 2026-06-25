@@ -21,8 +21,8 @@ export default async function meilisearchPriceDeleteHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'price.deleted',
+    // 'price.deleted',
     // Module events
-    PricingEvents.PRICE_DELETED,
+    // PricingEvents.PRICE_DELETED,
   ],
 }

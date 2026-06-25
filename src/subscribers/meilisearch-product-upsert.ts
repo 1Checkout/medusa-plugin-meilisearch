@@ -27,9 +27,9 @@ export const config: SubscriberConfig = {
     // commented lines below to restore per-product creation indexing.
     // Workflow events
     // 'product.created',
-    'product.updated',
+    // 'product.updated',
     // Module events
     // ProductEvents.PRODUCT_CREATED,
-    ProductEvents.PRODUCT_UPDATED,
+    // ProductEvents.PRODUCT_UPDATED,
   ],
 }

@@ -21,14 +21,14 @@ export default async function meilisearchTypeUpsertHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow evets
-    'product-type.created',
-    'product-type.updated',
-    'product-type.attached',
-    'product-type.detached',
+    // 'product-type.created',
+    // 'product-type.updated',
+    // 'product-type.attached',
+    // 'product-type.detached',
     // Module events
-    ProductEvents.PRODUCT_TYPE_CREATED,
-    ProductEvents.PRODUCT_TYPE_UPDATED,
-    ProductEvents.PRODUCT_TYPE_ATTACHED,
-    ProductEvents.PRODUCT_TYPE_DETACHED,
+    // ProductEvents.PRODUCT_TYPE_CREATED,
+    // ProductEvents.PRODUCT_TYPE_UPDATED,
+    // ProductEvents.PRODUCT_TYPE_ATTACHED,
+    // ProductEvents.PRODUCT_TYPE_DETACHED,
   ],
 }

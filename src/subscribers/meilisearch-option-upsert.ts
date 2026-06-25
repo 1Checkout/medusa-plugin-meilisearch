@@ -25,9 +25,9 @@ export const config: SubscriberConfig = {
     // post-import batched sync. Only UPDATE events index live.
     // Workflow events
     // 'product-option.created',
-    'product-option.updated',
+    // 'product-option.updated',
     // Module events
     // ProductEvents.PRODUCT_OPTION_CREATED,
-    ProductEvents.PRODUCT_OPTION_UPDATED,
+    // ProductEvents.PRODUCT_OPTION_UPDATED,
   ],
 }

@@ -21,8 +21,8 @@ export default async function meilisearchOptionValueDeleteHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'product-option-value.deleted',
+    // 'product-option-value.deleted',
     // Module events
-    ProductEvents.PRODUCT_OPTION_VALUE_DELETED,
+    // ProductEvents.PRODUCT_OPTION_VALUE_DELETED,
   ],
 }

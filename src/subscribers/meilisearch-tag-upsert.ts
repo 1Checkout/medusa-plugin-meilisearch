@@ -21,14 +21,14 @@ export default async function meilisearchTagUpsertHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'product-tag.created',
-    'product-tag.updated',
-    'product-tag.attached',
-    'product-tag.detached',
+    // 'product-tag.created',
+    // 'product-tag.updated',
+    // 'product-tag.attached',
+    // 'product-tag.detached',
     // Module events
-    ProductEvents.PRODUCT_TAG_CREATED,
-    ProductEvents.PRODUCT_TAG_UPDATED,
-    ProductEvents.PRODUCT_TAG_ATTACHED,
-    ProductEvents.PRODUCT_TAG_DETACHED,
+    // ProductEvents.PRODUCT_TAG_CREATED,
+    // ProductEvents.PRODUCT_TAG_UPDATED,
+    // ProductEvents.PRODUCT_TAG_ATTACHED,
+    // ProductEvents.PRODUCT_TAG_DETACHED,
   ],
 }

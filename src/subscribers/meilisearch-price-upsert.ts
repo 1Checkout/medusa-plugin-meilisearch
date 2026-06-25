@@ -25,9 +25,9 @@ export const config: SubscriberConfig = {
     // post-import batched sync. Only UPDATE events index live (live price changes).
     // Workflow events
     // 'price.created',
-    'price.updated',
+    // 'price.updated',
     // Module events
     // PricingEvents.PRICE_CREATED,
-    PricingEvents.PRICE_UPDATED,
+    // PricingEvents.PRICE_UPDATED,
   ],
 }

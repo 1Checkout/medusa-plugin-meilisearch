@@ -21,14 +21,14 @@ export default async function meilisearchCollectionUpsertHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'product-collection.created',
-    'product-collection.updated',
-    'product-collection.attached',
-    'product-collection.detached',
+    // 'product-collection.created',
+    // 'product-collection.updated',
+    // 'product-collection.attached',
+    // 'product-collection.detached',
     // Module events
-    ProductEvents.PRODUCT_COLLECTION_CREATED,
-    ProductEvents.PRODUCT_COLLECTION_UPDATED,
-    ProductEvents.PRODUCT_COLLECTION_ATTACHED,
-    ProductEvents.PRODUCT_COLLECTION_DETACHED,
+    // ProductEvents.PRODUCT_COLLECTION_CREATED,
+    // ProductEvents.PRODUCT_COLLECTION_UPDATED,
+    // ProductEvents.PRODUCT_COLLECTION_ATTACHED,
+    // ProductEvents.PRODUCT_COLLECTION_DETACHED,
   ],
 }

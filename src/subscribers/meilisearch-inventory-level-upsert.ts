@@ -21,10 +21,10 @@ export default async function meilisearchInventoryLevelUpsertHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'inventory-level.created',
-    'inventory-level.updated',
+    // 'inventory-level.created',
+    // 'inventory-level.updated',
     // Module events
-    InventoryEvents.INVENTORY_LEVEL_CREATED,
-    InventoryEvents.INVENTORY_LEVEL_UPDATED,
+    // InventoryEvents.INVENTORY_LEVEL_CREATED,
+    // InventoryEvents.INVENTORY_LEVEL_UPDATED,
   ],
 }

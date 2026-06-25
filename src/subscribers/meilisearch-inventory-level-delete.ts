@@ -21,8 +21,8 @@ export default async function meilisearchInventoryLevelDeleteHandler({
 export const config: SubscriberConfig = {
   event: [
     // Workflow events
-    'inventory-level.deleted',
+    // 'inventory-level.deleted',
     // Module events
-    InventoryEvents.INVENTORY_LEVEL_DELETED,
+    // InventoryEvents.INVENTORY_LEVEL_DELETED,
   ],
 }
