@@ -6,7 +6,6 @@ import { sdk } from '../../../lib/sdk'
 
 import { AdminCategoriesHitsResponse } from '../../../../api/admin/meilisearch/categories-hits/route.ts'
 import { AdminProductsHitsResponse } from '../../../../api/admin/meilisearch/products-hits/route'
-import { AdminSyncResponse } from '../../../../api/admin/meilisearch/sync/route.ts'
 import { AdminVectorStatusResponse } from '../../../../api/admin/meilisearch/vector-status/route.ts'
 
 const SyncPage = () => {
@@ -28,16 +27,18 @@ const SyncPage = () => {
   })
 
   const { mutate: syncData, isPending: syncPending } = useMutation({
+    // The API runs in `server` worker-mode and cannot emit events to the worker,
+    // so this requests a sync via Redis; the worker's cron starts it within ~1 min.
     mutationFn: () =>
-      sdk.client.fetch<AdminSyncResponse>('/admin/meilisearch/sync', {
+      sdk.client.fetch<{ message: string }>('/admin/meilisearch/request-sync', {
         method: 'POST',
       }),
     onSuccess: () => {
-      toast.success('Successfully triggered data sync to Meilisearch')
+      toast.success('Meilisearch sync requested — the worker will start it within ~1 minute')
     },
     onError: (err) => {
       console.error(err)
-      toast.error('Failed to sync data to Meilisearch')
+      toast.error('Failed to request a Meilisearch sync')
     },
   })
 

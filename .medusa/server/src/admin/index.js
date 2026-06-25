@@ -30,15 +30,17 @@ const SyncPage = () => {
     // Consider data stale after 30 seconds
   });
   const { mutate: syncData, isPending: syncPending } = reactQuery.useMutation({
-    mutationFn: () => sdk.client.fetch("/admin/meilisearch/sync", {
+    // The API runs in `server` worker-mode and cannot emit events to the worker,
+    // so this requests a sync via Redis; the worker's cron starts it within ~1 min.
+    mutationFn: () => sdk.client.fetch("/admin/meilisearch/request-sync", {
       method: "POST"
     }),
     onSuccess: () => {
-      ui.toast.success("Successfully triggered data sync to Meilisearch");
+      ui.toast.success("Meilisearch sync requested — the worker will start it within ~1 minute");
     },
     onError: (err) => {
       console.error(err);
-      ui.toast.error("Failed to sync data to Meilisearch");
+      ui.toast.error("Failed to request a Meilisearch sync");
     }
   });
   const { mutate: searchProducts, isPending: searchProductsPending } = reactQuery.useMutation({
